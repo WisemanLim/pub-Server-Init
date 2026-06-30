@@ -444,7 +444,8 @@ install_python() {
 install_node() {
   step "Node.js — nvm + pnpm"
 
-  # nvm
+  # nvm — disable set -u: nvm scripts use unbound vars internally
+  set +u
   if [[ -d "$HOME/.nvm" ]]; then
     success "nvm already installed."
     # shellcheck source=/dev/null
@@ -455,24 +456,29 @@ install_node() {
   else
     log "Installing nvm..."
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/HEAD/install.sh | bash
-    # shellcheck source=/dev/null
     export NVM_DIR="$HOME/.nvm"
+    # shellcheck source=/dev/null
     [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
   fi
 
   # Source nvm for current session
   export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+  # shellcheck source=/dev/null
   [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh" || true
 
   # Node LTS
   if command -v node &>/dev/null; then
+    set -u
     success "Node.js: $(node --version)"
     if ask_yes_no "Install/switch to latest LTS?" "n"; then
+      set +u
       nvm install --lts && nvm use --lts && nvm alias default node
+      set -u
     fi
   else
     log "Installing Node.js LTS..."
     nvm install --lts && nvm use --lts && nvm alias default node
+    set -u
     success "Node.js: $(node --version)"
   fi
 
