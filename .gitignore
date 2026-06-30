@@ -1,0 +1,47 @@
+# ===== Common =====
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ===== Editors =====
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.orig
+*.bak
+
+# ===== Claude / AI tools =====
+.omc/
+.claude/
+.aider*
+.cursor/
+
+# ===== OS Temp =====
+*.tmp
+*.temp
+*.log
+*.pid
+*.seed
+*.lock
+
+# ===== Shell =====
+*.sh.bak
+
+# ===== Secrets =====
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
